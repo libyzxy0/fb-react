@@ -75,7 +75,7 @@ export default function App() {
     });
     setReaction("");
     setLink("");
-  } catch (error: AxiosError) {
+  } catch (error: any) {
     console.log(error);
     toast("Failed to react to your post!", {
       description: error.response ? error.response.data : "Unknown error occurred",
