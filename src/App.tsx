@@ -12,7 +12,7 @@ import { toast } from "sonner";
 
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 export default function App() {
   const [cookies, setCookies] = useState<string[]>([]);
