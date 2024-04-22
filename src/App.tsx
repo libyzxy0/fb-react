@@ -48,6 +48,7 @@ export default function App() {
   const handleSubmit = async (): Promise<void> => {
   try {
     const randomCookie = cookies[Math.floor(Math.random() * cookies.length)];
+    
     const { data } = await axios.post("https://autoreact-api-ryodev.replit.app/api/react", { link, type: reaction, cookie: randomCookie })
     
     console.log(data);
@@ -84,7 +85,7 @@ export default function App() {
         
         <h1 className="font-medium text-lg text-white mx-4 mt-4">Cookies - {cookies.length}</h1>
         <div className="mx-4">
-          <div className="flex justify-center">
+          <div className="flex justify-center flex-col">
             {cookies.map((cookie, index) => (
               <div key={index} className="mt-4 text-gray-400 bg-gray-800 border-none py-2.5 rounded-md my-2 w-full px-3 text-md flex items-center justify-between">
                 <p>{truncateString(cookie, 20)}</p>
