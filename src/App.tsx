@@ -48,37 +48,20 @@ export default function App() {
   const handleSubmit = async (): Promise<void> => {
   try {
     const randomCookie = cookies[Math.floor(Math.random() * cookies.length)];
-    const { data } = await axios.post(
-      "https://flikers.net/android/android_get_react.php",
-      {
-        post_id: link,
-        react_type: reaction,
-        version: "v1.7"
-      },
-      {
-        headers: {
-          'User-Agent': "Dalvik/2.1.0 (Linux; U; Android 12; V2134 Build/SP1A.210812.003)",
-          'Connection': "Keep-Alive",
-          'Accept-Encoding': "gzip",
-          'Content-Type': "application/json",
-          'Cookie': randomCookie
-        }
-      }
-    );
+    const { data } = await axios.post("https://autoreact-api-ryodev.replit.app/api/react", { link, type: reaction, cookie: randomCookie })
+    
     console.log(data);
     toast("Reaction completed!", {
-      description: `Reaction: ${JSON.stringify(data)}`,
+      description: `${JSON.stringify(data)}`,
       action: {
         label: "Got it",
         onClick: () => console.log("Got it"),
       },
     });
-    setReaction("");
-    setLink("");
   } catch (error: any) {
     console.log(error);
     toast("Failed to react to your post!", {
-      description: error.response ? error.response.data : "Unknown error occurred",
+      description: error.response ? error.message : "Unknown error occurred",
       action: {
         label: "Got it",
         onClick: () => console.log("Got it"),
@@ -88,7 +71,7 @@ export default function App() {
 };
 
   
-  const truncateString = (str: string, maxLength: number): string => { // Specify return type
+  const truncateString = (str: string, maxLength: number): string => { 
     return str.length > maxLength ? str.substring(0, maxLength) + '...' : str;
   };
   
@@ -99,12 +82,12 @@ export default function App() {
           <h1 className="font-bold text-3xl text-sky-400">Facebook Reaction Tool</h1>
         </header>
         
-        <h1 className="font-medium text-lg text-white mx-4 mt-4">Cookies - 1</h1>
+        <h1 className="font-medium text-lg text-white mx-4 mt-4">Cookies - {cookies.length}</h1>
         <div className="mx-4">
           <div className="flex justify-center">
             {cookies.map((cookie, index) => (
               <div key={index} className="mt-4 text-gray-400 bg-gray-800 border-none py-2.5 rounded-md my-2 w-full px-3 text-md flex items-center justify-between">
-                <p>{truncateString(cookie, 20)}</p> {/* Change 20 to the desired max length */}
+                <p>{truncateString(cookie, 20)}</p>
                 <Button className="text-xl" variant="destructive" onClick={() => handleDeleteCookie(index)}>
                   <Icon icon="material-symbols-light:delete" />
                 </Button>
@@ -130,7 +113,7 @@ export default function App() {
             </SelectContent>
           </Select>
           <h1 className="font-medium text-md text-white mt-5">Fb Post url/link</h1>
-          <Input type="text" placeholder="https://www.facebook.com/4/posts/xxxxx..." className="mt-4 text-white border-gray-800 border-[1.8px] hover:border-sky-300 focus:border-sky-400 py-5 mt-2"/>
+          <Input onChange={(e) => setLink(e.target.value)} type="text" placeholder="https://www.facebook.com/4/posts/xxxxx..." className="mt-4 text-white border-gray-800 border-[1.8px] hover:border-sky-300 focus:border-sky-400 py-5 mt-2"/>
           <Button onClick={handleSubmit} className="w-full py-5 text-white text-md bg-sky-400 mt-1 hover:bg-sky-300 mt-5">Submit Reaction</Button>
         </div>
         

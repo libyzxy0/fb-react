@@ -75,6 +75,10 @@
     }
   }
   
+body {
+  background-color: #030712; /*gray-950*/
+}
+
 .poppins-regular {
   font-family: "Poppins", sans-serif;
   font-weight: 300;
