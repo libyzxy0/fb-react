@@ -12,7 +12,7 @@ import { toast } from "sonner";
 
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 export default function App() {
   const [cookies, setCookies] = useState<string[]>([]);
@@ -75,7 +75,7 @@ export default function App() {
     });
     setReaction("");
     setLink("");
-  } catch (error) {
+  } catch (error: AxiosError) {
     console.log(error);
     toast("Failed to react to your post!", {
       description: error.response ? error.response.data : "Unknown error occurred",
